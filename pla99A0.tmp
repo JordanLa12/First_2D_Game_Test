@@ -1,10 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://uin1vlumci41"]
+[gd_scene load_steps=26 format=3 uid="uid://uin1vlumci41"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_12w61"]
 [ext_resource type="Texture2D" uid="uid://yfkgfw14k881" path="res://Sprites/AnimationSheet_Character.png" id="2_jhm6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vfgj4"]
-size = Vector2(38.925, 62)
+size = Vector2(38, 64)
 
 [sub_resource type="Animation" id="Animation_fei6j"]
 length = 0.001
@@ -19,18 +19,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2DStand:shape")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("RectangleShape2D_vfgj4")]
 }
 
 [sub_resource type="Animation" id="Animation_mr4vi"]
@@ -143,22 +131,11 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2DStand:shape")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [SubResource("RectangleShape2D_vfgj4"), SubResource("RectangleShape2D_vfgj4")]
-}
 
 [sub_resource type="Animation" id="Animation_mao3o"]
 resource_name = "jump"
-length = 0.85
+length = 1.15
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -166,10 +143,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [40, 41, 42, 43, 44, 45, 46, 47]
+"values": [40, 41, 41, 42, 43, 43, 44, 44, 45, 46, 47]
 }
 
 [sub_resource type="Animation" id="Animation_0qfiu"]
@@ -219,18 +196,11 @@ _data = {
 "walk": SubResource("Animation_rg2ef")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_evnus"]
+animation = &"fall"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v4toi"]
 animation = &"RESET"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ycc61"]
-
-[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_hfag7"]
-input_0/name = "ground"
-input_0/auto_advance = false
-input_0/reset = true
-input_1/name = "air"
-input_1/auto_advance = false
-input_1/reset = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_am8o0"]
 animation = &"blink"
@@ -241,19 +211,8 @@ animation = &"crouch"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ul4xx"]
 animation = &"dash"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_evnus"]
-animation = &"fall"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8bkcx"]
 animation = &"idle"
-
-[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_7rpmy"]
-input_0/name = "jumping"
-input_0/auto_advance = false
-input_0/reset = true
-input_1/name = "falling"
-input_1/auto_advance = false
-input_1/reset = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2y2jf"]
 animation = &"jump"
@@ -271,45 +230,40 @@ input_2/reset = true
 input_3/name = "dash"
 input_3/auto_advance = false
 input_3/reset = true
-input_4/name = "crouch"
+input_4/name = "jump"
 input_4/auto_advance = false
 input_4/reset = true
+input_5/name = "fall"
+input_5/auto_advance = false
+input_5/reset = true
+input_6/name = "crouch"
+input_6/auto_advance = false
+input_6/reset = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rehav"]
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_na1wg"]
-graph_offset = Vector2(-203, 227.909)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_v4toi")
 nodes/Animation/position = Vector2(560, 0)
-nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_ycc61")
-nodes/StateMachine/position = Vector2(1366.2, 524.6)
-nodes/Transition/node = SubResource("AnimationNodeTransition_hfag7")
-nodes/Transition/position = Vector2(1260, 200)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_evnus")
+"nodes/Animation 2/position" = Vector2(360, 680)
 nodes/blink/node = SubResource("AnimationNodeAnimation_am8o0")
 nodes/blink/position = Vector2(200, 220)
 nodes/crouch/node = SubResource("AnimationNodeAnimation_6ixns")
-nodes/crouch/position = Vector2(340, 580)
+nodes/crouch/position = Vector2(520, 580)
 nodes/dash/node = SubResource("AnimationNodeAnimation_ul4xx")
 nodes/dash/position = Vector2(220, 480)
-nodes/fall/node = SubResource("AnimationNodeAnimation_evnus")
-nodes/fall/position = Vector2(700, 800)
 nodes/idle/node = SubResource("AnimationNodeAnimation_8bkcx")
 nodes/idle/position = Vector2(200, 80)
-nodes/in_air/node = SubResource("AnimationNodeTransition_7rpmy")
-nodes/in_air/position = Vector2(1060, 580)
 nodes/jump/node = SubResource("AnimationNodeAnimation_2y2jf")
-nodes/jump/position = Vector2(680, 660)
+nodes/jump/position = Vector2(220, 620)
 nodes/movement/node = SubResource("AnimationNodeTransition_hgrt8")
 nodes/movement/position = Vector2(760, 240)
-nodes/output/position = Vector2(1660, 140)
+nodes/output/position = Vector2(1200, 80)
 nodes/walk/node = SubResource("AnimationNodeAnimation_rehav")
 nodes/walk/position = Vector2(220, 360)
-node_connections = [&"Transition", 0, &"movement", &"Transition", 1, &"in_air", &"in_air", 0, &"jump", &"in_air", 1, &"fall", &"movement", 0, &"idle", &"movement", 1, &"blink", &"movement", 2, &"walk", &"movement", 3, &"dash", &"movement", 4, &"crouch", &"output", 0, &"Transition"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tlylu"]
-radius = 19.0
-height = 50.0
+node_connections = [&"movement", 0, &"idle", &"movement", 1, &"blink", &"movement", 2, &"walk", &"movement", 3, &"dash", &"movement", 4, &"jump", &"movement", 5, &"Animation 2", &"movement", 6, &"crouch", &"output", 0, &"movement"]
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(416, 480)
@@ -324,7 +278,7 @@ hframes = 8
 vframes = 9
 region_rect = Rect2(0, -1, 261, 295)
 
-[node name="CollisionShape2DStand" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 3)
 shape = SubResource("RectangleShape2D_vfgj4")
 
@@ -339,16 +293,6 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeBlendTree_na1wg")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Transition/current_state = "ground"
-parameters/Transition/transition_request = ""
-parameters/Transition/current_index = 0
-parameters/in_air/current_state = "jumping"
-parameters/in_air/transition_request = ""
-parameters/in_air/current_index = 0
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
-
-[node name="CollisionShape2DCrouch" type="CollisionShape2D" parent="."]
-position = Vector2(-4, 9)
-shape = SubResource("CapsuleShape2D_tlylu")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://uin1vlumci41"]
+[gd_scene load_steps=29 format=3 uid="uid://uin1vlumci41"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_12w61"]
 [ext_resource type="Texture2D" uid="uid://yfkgfw14k881" path="res://Sprites/AnimationSheet_Character.png" id="2_jhm6v"]
@@ -222,8 +222,6 @@ _data = {
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v4toi"]
 animation = &"RESET"
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ycc61"]
-
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_hfag7"]
 input_0/name = "ground"
 input_0/auto_advance = false
@@ -279,11 +277,9 @@ input_4/reset = true
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_na1wg"]
-graph_offset = Vector2(-203, 227.909)
+graph_offset = Vector2(82.6011, 382.534)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_v4toi")
 nodes/Animation/position = Vector2(560, 0)
-nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_ycc61")
-nodes/StateMachine/position = Vector2(1366.2, 524.6)
 nodes/Transition/node = SubResource("AnimationNodeTransition_hfag7")
 nodes/Transition/position = Vector2(1260, 200)
 nodes/blink/node = SubResource("AnimationNodeAnimation_am8o0")
