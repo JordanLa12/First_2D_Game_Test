@@ -8,6 +8,10 @@ const JUMP_VELOCITY = -450.0
 #var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const GRAVITY = 25
 
+const DOUBLETAP_DELAY = 0.25
+var doubletap_time = DOUBLETAP_DELAY
+var last_keycode = 0
+
 enum PlayerStates {idle, moving, airborne}
 var state = PlayerStates.idle
 
@@ -24,7 +28,7 @@ func _physics_process(delta):
 		#$AnimationTree.set("parameters/movement/transition_request", "fall")
 
 	# Handle jump.
-	if Input.is_action_just_pressed("move_jump"):
+	if Input.is_action_pressed("move_jump"):
 		state = PlayerStates.airborne
 		velocity.y = JUMP_VELOCITY
 		
@@ -35,14 +39,14 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 		
-	var direction = Input.get_axis("move_left", "move_right")
+	var direction = Input.get_axis("move_left", "move_right") # On left or right hold inputs multiple inputs like turbo mode, need to fix for touble tap
 	if direction: # direction is an int, if ~0/True
 		if direction < 0:
 			$Sprite2D.flip_h = true
 		else: 
 			$Sprite2D.flip_h = false
-		#if is_on_floor():
-			#state = PlayerStates.moving
+		if is_on_floor():
+			state = PlayerStates.moving
 			
 		velocity.x = direction * SPEED
 	else:
@@ -54,17 +58,36 @@ func _physics_process(delta):
 		
 	match state: 
 		PlayerStates.idle:
+			$AnimationTree.set("parameters/Transition/transition_request", "ground")
 			$AnimationTree.set("parameters/movement/transition_request", "idle")
 		PlayerStates.moving:
 			$AnimationTree.set("parameters/movement/transition_request", "walk")
 		PlayerStates.airborne:
-			$AnimationTree.set("parameters/in_air/transition_request", "jump")
+			$AnimationTree.set("parameters/Transition/transition_request", "air")
+			$AnimationTree.set("parameters/in_air/transition_request", "jumping")
 		
+	doubletap_time -= delta
+	_input("move_right")
+	print("last key code is: " + str(last_keycode))
 	
-	print(state)
 		
 
 	move_and_slide()
+	
+func _input(event):
+	if event is InputEventKey and event.is_pressed(): # Checks if event is a key type and if it is pressed
+		print(event.as_text()) # Human readable
+		print(event.keycode) # Actual key code
+		print("last key code is: " + str(last_keycode))
+		if last_keycode == event.keycode and doubletap_time >= 0: # if last_keycode same as current, i.e double press and buffer time still active do double tap input
+			#print("DOUBLETAP: ", String.chr(event.keycode))
+			last_keycode = 0
+		else:
+			last_keycode = event.keycode
+		doubletap_time = DOUBLETAP_DELAY
+	if event is InputEventKey:
+		var keycode = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
+		print(OS.get_keycode_string(keycode))
 
 func walk(): 
 	if is_on_floor():
