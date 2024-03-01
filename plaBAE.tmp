@@ -277,7 +277,7 @@ input_3/reset = true
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_na1wg"]
-graph_offset = Vector2(-151.3, 181.385)
+graph_offset = Vector2(-175.43, 202.223)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_v4toi")
 nodes/Animation/position = Vector2(560, 0)
 nodes/Transition/node = SubResource("AnimationNodeTransition_hfag7")
